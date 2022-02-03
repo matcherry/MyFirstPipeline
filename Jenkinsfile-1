@@ -1,15 +1,15 @@
 pipeline {
   agent none
   stages {
-    stage('build') {
+    stage('build-master') {
       parallel {
-        stage('linux-amd64') {
+        stage('build') {
           agent {label 'master-jenkins'}
           steps {
             echo 'build the apps..'
           }
         }
-        stage('linux-amd64') {
+        stage('build-slave') {
           agent {label 'slave-jenkins'}
           steps {
             echo 'build the apps..'
@@ -19,13 +19,13 @@ pipeline {
     }
     stage('run') {
       parallel {
-        stage('linux-amd64') {
+        stage('run-master') {
           agent {label 'master-jenkins'}
           steps {
             echo 'run the apps..'
           }
         }
-        stage('linux-amd64') {
+        stage('run-slave') {
           agent {label 'slave-jenkins'}
           steps {
             echo 'run the apps..'
