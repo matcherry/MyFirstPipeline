@@ -1,0 +1,37 @@
+pipeline {
+  agent none
+  stages {
+    stage('build') {
+      parallel {
+        stage('linux-amd64') {
+          agent {label 'master-jenkins'}
+          steps {
+            echo 'build the apps..'
+          }
+        }
+        stage('linux-amd64') {
+          agent {label 'slave-jenkins'}
+          steps {
+            echo 'build the apps..'
+          }
+        }
+      }
+    }
+    stage('run') {
+      parallel {
+        stage('linux-amd64') {
+          agent {label 'master-jenkins'}
+          steps {
+            echo 'run the apps..'
+          }
+        }
+        stage('linux-amd64') {
+          agent {label 'slave-jenkins'}
+          steps {
+            echo 'run the apps..'
+          }
+        }
+      }
+    }
+  }
+}
